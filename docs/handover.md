@@ -18,6 +18,8 @@ Ten service tests and three HTTP/browser tests passed, along with lint, type che
 
 ## Remaining setup
 
+The public project showcase is live on GitHub Pages at https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/. It contains the portfolio and project links; the protected helpdesk is a separate application.
+
 A public running demo needs an authorised free Next.js host and persistent PostgreSQL connection. Import the repository, set environment variables, apply migrations, privately provision accounts and verify the main workflow. Follow [deployment guidance](deployment.md). GitHub source hosting is not a running application.
 
 Optional AI, email, attachments, account provisioning UI and multiple organisations are outside version 1. Development-tool audit findings and unperformed security/accessibility checks are stated in the results document.
