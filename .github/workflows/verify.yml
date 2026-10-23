@@ -1,0 +1,54 @@
+name: Verify HelpDeskFlow
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: helpdeskflow
+          # Only this disposable CI service uses trust; never use this for hosting.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: [5432:5432]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres@127.0.0.1:5432/helpdeskflow
+      BETTER_AUTH_URL: http://127.0.0.1:3000
+      DEMO_MODE: "false"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - name: Create a temporary session secret
+        run: node -e "require('fs').appendFileSync(process.env.GITHUB_ENV, 'BETTER_AUTH_SECRET=' + require('crypto').randomBytes(40).toString('hex') + '\n')"
+      - run: npm ci
+      - run: npm run db:generate
+      - run: npm run db:migrate
+      - run: npm run db:seed
+      - run: npm test
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npx playwright install --with-deps chromium
+      - name: Run production server and browser checks
+        run: |
+          npm start > /tmp/helpdeskflow-server.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/login > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run test:e2e
+      # Traces and private seed credentials are deliberately not uploaded as artifacts.
