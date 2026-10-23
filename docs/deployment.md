@@ -1,16 +1,20 @@
-# Deployment preparation — Next.js + managed PostgreSQL
+# Deployment — Next.js + managed PostgreSQL
 
 ## Public portfolio on GitHub Pages
 
-The `Publish portfolio to GitHub Pages` workflow builds the existing public Next.js page, then `scripts/build-pages.mjs` exports only its static markup, compiled styles and four allowlisted screenshots. GitHub Pages publishes that allowlisted artifact. No API routes, sign-in form, environment files, seed credentials or database records are exported. The buttons link to local setup instructions rather than a non-working online login. The public address is https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/.
+The `Publish portfolio to GitHub Pages` workflow builds the existing public Next.js page, then `scripts/build-pages.mjs` exports only its static markup, compiled styles and four allowlisted screenshots. GitHub Pages publishes that allowlisted artifact. No API routes, sign-in form, environment files, seed credentials or database records are exported. The workspace buttons link to the live application sign-in page. The public address is https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/.
 
-This hosts the project showcase. The full helpdesk still requires the server/database deployment described below.
+GitHub Pages hosts the showcase. The full helpdesk is live at https://helpdeskflow-portfolio.vercel.app, running on Vercel with the existing helpdeskflow Neon project.
 
-The intended hosting option is Vercel for the Next.js app with a managed PostgreSQL database (for example, a suitable free Neon project). No paid resources are authorised. This is preparation, not a claim that a live deployment exists.
+The existing Vercel Hobby project and Neon Free database were used. No paid resources were provisioned. The database password exposed during setup was replaced; secret values are excluded from source and logs.
 
-## Remaining access
+## Verified live setup
 
-Connect the verified GitHub repository to an authorised hosting account and provide a free PostgreSQL connection. Confirm current free-plan availability in the provider dashboard before creating resources. Do not expose the local PGlite socket server.
+Production origin: https://helpdeskflow-portfolio.vercel.app. Node.js 24, Next.js, DATABASE_URL as a Secret, BETTER_AUTH_SECRET as a Secret, BETTER_AUTH_URL at that origin, DEMO_MODE=true. Schema migrations used a direct Neon connection; application traffic uses the pooled connection.
+
+A one-time staged build ran scripts/initialize-demo.mjs to apply the migration, create four fictional accounts and twelve tickets, and replace the exposed database password. scripts/bootstrap-demo.ts refuses an existing-user database and requires explicitly supplied private passwords. The ordinary build remains npm run build; initialization and password replacement never run on normal builds. Temporary bootstrap secrets were removed before the final deployment. Never run the development seed in production.
+
+Keep live login details in the ignored local handover file. Share only the requester/agent credentials with demo visitors; keep the administrator password private.
 
 ## Configuration
 

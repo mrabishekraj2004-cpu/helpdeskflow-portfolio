@@ -6,9 +6,9 @@ An IT helpdesk portfolio project by **Abishek Akash**, seeking a trainee IT oppo
 
 ## Status
 
-The public portfolio is live on [GitHub Pages](https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/). It shows the project, screenshots, source and evidence links. GitHub Pages does not run the protected helpdesk or its database. The full application remains available through local setup below.
+The public portfolio is live on [GitHub Pages](https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/). It shows the project, screenshots, source and evidence links. GitHub Pages does not run the protected helpdesk or its database. The complete application is live on [Vercel](https://helpdeskflow-portfolio.vercel.app), backed by Neon PostgreSQL. Demo accounts are provided privately by the project owner.
 
-Version 1 is a database-backed application. See [actual test results](docs/test-results.md) for executed verification. [GitHub source](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio) stores the code; a public running demo is not configured yet. Start with the [handover](docs/handover.md).
+Version 1 is a database-backed application. See [actual test results](docs/test-results.md) for executed verification. [GitHub source](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio) stores the code; the [running application](https://helpdeskflow-portfolio.vercel.app) supports sign-in and persistent tickets. Start with the [handover](docs/handover.md).
 
 ## Features
 

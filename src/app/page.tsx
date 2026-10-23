@@ -100,11 +100,13 @@ export default function Portfolio() {
       </section>
       <section className="card card-body">
         <span className="eyebrow">Project status & limitations</span>
-        <h2>Version 1 · Local application</h2>
+        <h2>Version 1 · Live application</h2>
         <p>
           Built for a portfolio demonstration with fictional data. See the case
           study and repository test-results document for executed checks and
-          remaining setup. A public running demo is not configured yet.
+          limitations. The full application is hosted on Vercel with a
+          persistent PostgreSQL database. Ask the project owner for a demo
+          account.
         </p>
         <div className="actions">
           <a

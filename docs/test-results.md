@@ -25,7 +25,7 @@ Windows; Node.js 24.17.0; npm 11.13.0; Next.js 16.4.2; Prisma 7.10.1; Better Aut
 | GitHub repository creation | Passed | Personal owner mrabishekraj2004-cpu verified; unused name; public repository created |
 | GitHub push and remote contents | Passed | Remote main matched implementation commit; required source, migration, lockfile, tests, docs and screenshots verified; excluded paths absent |
 | Ordinary PostgreSQL CI | Passed | [GitHub Actions run](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio/actions/runs/39907566262): every job step succeeded |
-| Live application hosting | Not run | Authorised host/database connection not configured |
+| Live application hosting | Passed, 23 October 2026 | Vercel production deployment with Neon PostgreSQL; [live app](https://helpdeskflow-portfolio.vercel.app) |
 
 ## PostgreSQL 17 verification
 
@@ -66,8 +66,14 @@ Desktop queue, mobile queue and ticket detail screenshots were visually inspecte
 
 The full dependency audit reports an advisory in braces through micromatch, fast-glob and Next's development ESLint tooling. Compatible npm audit fix did not remove it; force proposed downgrading Next lint support and was not applied. Production-only audit returned zero findings. Prisma/pg emits a query-concurrency deprecation warning on pinned pg 8; it did not fail checks and needs review before pg 9.
 
-No load, penetration, independent security, real-user, email, AI-provider, live full-helpdesk deployment or production PostgreSQL concurrency test is claimed. Optional runtime AI is not implemented. Traces can contain private credentials, are ignored, and are never uploaded.
+No load, penetration, independent security, real-user, email, AI-provider or production PostgreSQL concurrency test is claimed. Optional runtime AI is not implemented. Traces can contain private credentials, are ignored, and are never uploaded.
 
 ## GitHub Pages portfolio publication
 
 The public-only export was checked locally at desktop and mobile sizes. Styles and the real application screenshot loaded, mobile document overflow was absent, and the artifact had no sign-in forms or protected application links. ESLint passed after adding the exporter and publishing workflow. GitHub Pages hosts the public portfolio; it does not run the Next.js helpdesk API, authentication or database. Publication passed in [GitHub Actions](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio/actions/runs/39912730713) for commit 09f3399. The live URL returned HTTP 200 and passed browser checks for desktop/mobile layout, loaded styles and the fully loaded screenshot. The latest full application verification also passed in [this run](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio/actions/runs/39912730676). Live portfolio: https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/.
+
+## Hosted application verification — 23 October 2026
+
+Production deployment dpl_Eeb2AuZPDi8ph5ohcizYaWo8CY1S, commit a97a13e, passed a staged build and hosted API checks before promotion. Applied the initial migration on Neon; initialized four fictional accounts and twelve tickets. All four accounts signed in. Anonymous ticket access returned 401; another requester could not read a created ticket (404); requester administration returned 403; internal notes were omitted from requester responses; resolve/reopen persisted; demo administrator mutations returned 403; sign-out invalidated the session. Temporary bootstrap secrets were removed and the exposed database password was replaced before release. Verification added one fictional ticket. Private credentials, cookie jars and response bodies were not published.
+
+The public production origin returned HTTP 200 without Vercel authentication. Chromium verified browser sign-in and redirect, the rendered requester workspace at 1440x1000 and 390x844, no mobile horizontal overflow, and no page errors. Private screenshots remain local.

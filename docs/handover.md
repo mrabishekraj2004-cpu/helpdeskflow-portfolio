@@ -16,11 +16,11 @@ Verified repository: https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfo
 
 Ten service tests and three HTTP/browser tests passed, along with lint, type checking, production build and database restart persistence. The complete automated check also passed on PostgreSQL 17 in [GitHub Actions](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio/actions/runs/39907566262).
 
-## Remaining setup
+## Live application and remaining limitations
 
 The public project showcase is live on GitHub Pages at https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/. It contains the portfolio and project links; the protected helpdesk is a separate application.
 
-A public running demo needs an authorised free Next.js host and persistent PostgreSQL connection. Import the repository, set environment variables, apply migrations, privately provision accounts and verify the main workflow. Follow [deployment guidance](deployment.md). GitHub source hosting is not a running application.
+The complete demo is live at https://helpdeskflow-portfolio.vercel.app, hosted on Vercel with Neon PostgreSQL. Four fictional accounts were provisioned privately; owner login details are in the ignored .local/HelpDeskFlow-login-details.txt file. DEMO_MODE=true blocks category and role changes. The initial migration, all four sign-ins, ticket creation, requester isolation, private-note privacy, resolution/reopen, persistence and sign-out passed on the hosted application. See [deployment guidance](deployment.md).
 
 Optional AI, email, attachments, account provisioning UI and multiple organisations are outside version 1. Development-tool audit findings and unperformed security/accessibility checks are stated in the results document.
 
