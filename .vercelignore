@@ -1,0 +1,9 @@
+.local/
+.env*
+!.env.example
+.git/
+test-results/
+playwright-report/
+dist-pages/
+*.tsbuildinfo
+src/generated/

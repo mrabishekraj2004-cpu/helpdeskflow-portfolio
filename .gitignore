@@ -9,3 +9,5 @@ playwright-report/
 *.tsbuildinfo
 src/generated/
 dist-pages/
+
+.vercel/

@@ -5,6 +5,8 @@ export default defineConfig([
   ...next,
   ...ts,
   globalIgnores([
+    ".local/**",
+    "dist-pages/**",
     ".next/**",
     "src/generated/**",
     "test-results/**",

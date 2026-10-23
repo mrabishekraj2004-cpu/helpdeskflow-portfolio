@@ -15,6 +15,10 @@ assert.ok(paths.length > 0, "No staged files.");
 const privateAccounts = JSON.parse(
   readFileSync(".local/demo-credentials.json", "utf8"),
 );
+const privateLiveAccounts = JSON.parse(
+  readFileSync(".local/live-demo-credentials.json", "utf8"),
+);
+const databasePassword = readFileSync(".local/live-database-password.txt", "utf8").trim();
 const env = readFileSync(".env", "utf8");
 const secret = env.match(/BETTER_AUTH_SECRET="([^"]+)"/)?.[1];
 for (const path of paths) {
@@ -31,11 +35,12 @@ for (const path of paths) {
   const content = spawnSync("git", [...gitArgs, "show", `:${path}`], {
     maxBuffer: 20 * 1024 * 1024,
   }).stdout;
-  for (const account of Object.values(privateAccounts))
+  for (const account of [...Object.values(privateAccounts), ...Object.values(privateLiveAccounts)])
     assert.ok(
       !content.includes(Buffer.from(account.password)),
       `Private seed password found in ${path}`,
     );
+  assert.ok(!content.includes(Buffer.from(databasePassword)), `Private database password found in ${path}`);
   if (secret)
     assert.ok(
       !content.includes(Buffer.from(secret)),
