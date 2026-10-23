@@ -29,7 +29,8 @@ async function request(path, method = "GET", body) {
     },
     ...(body ? { body: JSON.stringify(body) } : {}),
   });
-  const data = await r.json();
+  const text = await r.text();
+  const data = text ? JSON.parse(text) : {};
   return { status: r.status, data };
 }
 const identity = await request("/user");
@@ -40,7 +41,41 @@ if (owner !== "mrabishekraj2004-cpu")
   throw new Error("Account changed; confirm owner before publishing.");
 console.log(`Verified authenticated personal account: ${owner}`);
 const repo = await request(`/repos/${owner}/helpdeskflow-portfolio`);
-if (process.argv[2] === "check") {
+if (process.argv[2] === "pages-enable") {
+  const existing = await request(
+    `/repos/${owner}/helpdeskflow-portfolio/pages`,
+  );
+  if (existing.status === 404) {
+    const created = await request(
+      `/repos/${owner}/helpdeskflow-portfolio/pages`,
+      "POST",
+      { build_type: "workflow" },
+    );
+    if (created.status !== 201)
+      throw new Error(
+        `Pages setup failed: ${created.status} ${created.data.message ?? ""}`,
+      );
+    console.log(`Pages enabled: ${created.data.html_url}`);
+  } else if (
+    existing.status === 200 &&
+    existing.data.build_type === "workflow"
+  ) {
+    console.log(`Existing workflow Pages site: ${existing.data.html_url}`);
+  } else
+    throw new Error(
+      `Existing Pages configuration requires review: ${existing.status}`,
+    );
+} else if (process.argv[2] === "pages-status") {
+  const pages = await request(`/repos/${owner}/helpdeskflow-portfolio/pages`);
+  console.log(
+    JSON.stringify({
+      status: pages.status,
+      url: pages.data.html_url,
+      build: pages.data.status,
+      build_type: pages.data.build_type,
+    }),
+  );
+} else if (process.argv[2] === "check") {
   console.log(`Repository availability HTTP ${repo.status}`);
   if (repo.status === 200)
     console.log("Repository already exists. Do not overwrite.");
@@ -59,15 +94,48 @@ if (process.argv[2] === "check") {
     throw new Error(`Repository creation failed: ${created.status}`);
   console.log(`Created: ${created.data.html_url}`);
 } else if (process.argv[2] === "actions") {
-  const runs = await request(`/repos/${owner}/helpdeskflow-portfolio/actions/runs?per_page=3`);
-  if (runs.status !== 200) throw new Error(`Actions inspection failed: ${runs.status}`);
-  console.log(JSON.stringify(runs.data.workflow_runs.map(r => ({ id:r.id, sha:r.head_sha, status:r.status, conclusion:r.conclusion, url:r.html_url })), null, 2));
+  const runs = await request(
+    `/repos/${owner}/helpdeskflow-portfolio/actions/runs?per_page=3`,
+  );
+  if (runs.status !== 200)
+    throw new Error(`Actions inspection failed: ${runs.status}`);
+  console.log(
+    JSON.stringify(
+      runs.data.workflow_runs.map((r) => ({
+        id: r.id,
+        sha: r.head_sha,
+        status: r.status,
+        conclusion: r.conclusion,
+        url: r.html_url,
+      })),
+      null,
+      2,
+    ),
+  );
 } else if (process.argv[2] === "jobs") {
   const runId = process.argv[3];
-  if (!/^\d+$/.test(runId ?? '')) throw new Error('Supply a numeric run ID.');
-  const jobs = await request(`/repos/${owner}/helpdeskflow-portfolio/actions/runs/${runId}/jobs`);
-  if(jobs.status !== 200) throw new Error(`Job inspection failed: ${jobs.status}`);
-  console.log(JSON.stringify(jobs.data.jobs.map(j => ({name:j.name,status:j.status,conclusion:j.conclusion,steps:j.steps.map(s=>({name:s.name,status:s.status,conclusion:s.conclusion}))})),null,2));
+  if (!/^\d+$/.test(runId ?? "")) throw new Error("Supply a numeric run ID.");
+  const jobs = await request(
+    `/repos/${owner}/helpdeskflow-portfolio/actions/runs/${runId}/jobs`,
+  );
+  if (jobs.status !== 200)
+    throw new Error(`Job inspection failed: ${jobs.status}`);
+  console.log(
+    JSON.stringify(
+      jobs.data.jobs.map((j) => ({
+        name: j.name,
+        status: j.status,
+        conclusion: j.conclusion,
+        steps: j.steps.map((s) => ({
+          name: s.name,
+          status: s.status,
+          conclusion: s.conclusion,
+        })),
+      })),
+      null,
+      2,
+    ),
+  );
 } else if (process.argv[2] === "verify") {
   if (repo.status !== 200)
     throw new Error(`Repository unavailable: ${repo.status}`);

@@ -1,5 +1,11 @@
 # Deployment preparation — Next.js + managed PostgreSQL
 
+## Public portfolio on GitHub Pages
+
+The `Publish portfolio to GitHub Pages` workflow builds the existing public Next.js page, then `scripts/build-pages.mjs` exports only its static markup, compiled styles and four allowlisted screenshots. GitHub Pages publishes that allowlisted artifact. No API routes, sign-in form, environment files, seed credentials or database records are exported. The buttons link to local setup instructions rather than a non-working online login. The public address is https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/.
+
+This hosts the project showcase. The full helpdesk still requires the server/database deployment described below.
+
 The intended hosting option is Vercel for the Next.js app with a managed PostgreSQL database (for example, a suitable free Neon project). No paid resources are authorised. This is preparation, not a claim that a live deployment exists.
 
 ## Remaining access

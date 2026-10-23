@@ -6,6 +6,8 @@ An IT helpdesk portfolio project by **Abishek Akash**, seeking a trainee IT oppo
 
 ## Status
 
+The public portfolio is prepared for [GitHub Pages](https://mrabishekraj2004-cpu.github.io/helpdeskflow-portfolio/). It shows the project, screenshots, source and evidence links. GitHub Pages does not run the protected helpdesk or its database. The full application remains available through local setup below.
+
 Version 1 is a database-backed application. See [actual test results](docs/test-results.md) for executed verification. [GitHub source](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio) stores the code; a public running demo is not configured yet. Start with the [handover](docs/handover.md).
 
 ## Features
