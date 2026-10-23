@@ -22,4 +22,4 @@ Read [test results](test-results.md) for executed service, HTTP, browser, type, 
 
 ## Limitations
 
-Fictional data only; private development passwords. No email, uploads, organisations, paid AI integration, or automatic replies. Development verification uses PGlite and must be followed by ordinary PostgreSQL and production-host checks before real use. A GitHub source upload is distinct from a live application deployment. This project supports interview discussion; it does not guarantee employment.
+Fictional data only; private development passwords. No email, uploads, organisations, paid AI integration, or automatic replies. Functional checks passed locally on PGlite and in GitHub Actions on PostgreSQL 17. Production-host, load and independent security checks remain. A verified GitHub source upload is distinct from a live application deployment. This project supports interview discussion; it does not guarantee employment.

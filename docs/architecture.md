@@ -38,4 +38,4 @@ Creation → Open → support assignment and status updates → Resolved with ex
 
 ## Operational limits
 
-The development PGlite socket server uses a single PostgreSQL engine with connection multiplexing. It is useful for local functional checks; ordinary PostgreSQL must be verified separately before production. Rate limiting is in memory and needs shared storage when scaling. No email or external AI service is called.
+The development PGlite socket server uses a single PostgreSQL engine with connection multiplexing. Functional checks also passed against ordinary PostgreSQL 17 in GitHub Actions. Production-host and concurrency/load testing remain separate steps. Rate limiting is in memory and needs shared storage when scaling. No email or external AI service is called.

@@ -12,7 +12,9 @@ Private accounts are in .local/demo-credentials.json, which is not on GitHub. Re
 
 [Actual test results](test-results.md), [user guide and screenshots](user-guide.md), [three-minute demo](demo-script.md), [learning notes](learning-notes.md).
 
-Repository: https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio. Upload verification is recorded separately in the results report.
+Verified repository: https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio. Source, migrations, lockfile, tests, documentation and screenshots are uploaded. Environment secrets, private credentials and database data are excluded.
+
+Ten service tests and three HTTP/browser tests passed, along with lint, type checking, production build and database restart persistence. The complete automated check also passed on PostgreSQL 17 in [GitHub Actions](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio/actions/runs/39907566262).
 
 ## Remaining setup
 

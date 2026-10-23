@@ -1,6 +1,6 @@
 # Test results
 
-Tested version: HelpDeskFlow **1.0.0**, 23 October 2026. Repository history identifies the delivered revision. These are executed checks, not an assumed checklist.
+Tested version: HelpDeskFlow **1.0.0**, 23 October 2026, implementation commit `cc04288fa0cc6f88d2d8522764d4985b14b69cd3`. The later delivery-report commit updates documentation and refreshes screenshots without application code changes. These are executed checks, not an assumed checklist.
 
 ## Local environment
 
@@ -23,9 +23,13 @@ Windows; Node.js 24.17.0; npm 11.13.0; Next.js 16.4.2; Prisma 7.10.1; Better Aut
 | Full dependency audit | Findings remain | Five high findings in development lint dependency chain |
 | Staged-file review | Passed before initial publication | Private passwords, session secret, key/token patterns, excluded paths and screenshots reviewed |
 | GitHub repository creation | Passed | Personal owner mrabishekraj2004-cpu verified; unused name; public repository created |
-| GitHub push and remote contents | Pending verification | Repository creation alone is not a verified source upload |
-| Ordinary PostgreSQL CI | Not run yet | Workflow supplied with disposable PostgreSQL 17 |
+| GitHub push and remote contents | Passed | Remote main matched implementation commit; required source, migration, lockfile, tests, docs and screenshots verified; excluded paths absent |
+| Ordinary PostgreSQL CI | Passed | [GitHub Actions run](https://github.com/mrabishekraj2004-cpu/helpdeskflow-portfolio/actions/runs/39907566262): every job step succeeded |
 | Live application hosting | Not run | Authorised host/database connection not configured |
+
+## PostgreSQL 17 verification
+
+GitHub's Ubuntu runner used Node.js 24 and a disposable PostgreSQL 17 container. Clean `npm ci`, client generation, migration, transactional seed, ten service tests, lint, production build, type check, Chromium installation and all three HTTP/browser tests completed successfully. This verifies ordinary PostgreSQL functional behaviour as well as the local PGlite run. It does not establish a running public demo, production load capacity or deployment readiness. The CI service's passwordless trust configuration is confined to its disposable test job and is not a hosting configuration. Private seed credentials and traces were not uploaded as artifacts.
 
 ## Service scenarios executed
 
