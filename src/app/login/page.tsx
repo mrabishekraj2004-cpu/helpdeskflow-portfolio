@@ -42,6 +42,7 @@ export default function Login() {
           )}
           <form
             className="form"
+            method="post"
             onSubmit={async (e) => {
               e.preventDefault();
               setBusy(true);

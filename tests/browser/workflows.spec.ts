@@ -7,6 +7,34 @@ test.setTimeout(60000);
 test.beforeAll(async () => {
   accounts = JSON.parse(await readFile(".local/demo-credentials.json", "utf8"));
 });
+test("login keeps credentials out of the URL before JavaScript loads", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.route("**/login", async (route) => {
+    if (route.request().method() === "POST") {
+      await route.fulfill({
+        status: 200,
+        contentType: "text/html",
+        body: "Submission checked",
+      });
+    } else await route.continue();
+  });
+  await page.goto(`${base}/login`);
+  await page.getByLabel("Email address").fill("form-check@example.test");
+  await page
+    .getByLabel("Password", { exact: true })
+    .fill("Fictional-form-check-only");
+  const submission = page.waitForRequest(
+    (request) => request.method() === "POST",
+  );
+  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  const request = await submission;
+  expect(new URL(request.url()).search).toBe("");
+  expect(request.postData()).toContain("password=");
+  await context.close();
+});
 async function signIn(request: APIRequestContext, account: Account) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const response = await request.post("/api/auth/sign-in/email", {
